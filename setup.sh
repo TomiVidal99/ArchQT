@@ -32,7 +32,7 @@ read -p "root password: " root_password
 read -p "hostname: " hostname
 read -p "desktop environment: ['KDE', 'KDE/i3', 'custom'] " desktop_environment
 
-read -p "custom locale or default to en_US: [Y/N] " custom_locale
+read -p "custom locale? (default is en_US) [Y/N] " custom_locale
 locale='es_US'
 case $custom_locale in
   y|Y|yes|Yes|YES)
