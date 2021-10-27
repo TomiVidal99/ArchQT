@@ -1,49 +1,31 @@
 #!/usr/bin/env bash
 #-------------------------------------------------------------------------
-#  ▄▄▄       ██▀███   ▄████▄   ██░ ██  ███▄ ▄███▓ ▄▄▄     ▄▄▄█████▓ ██▓ ▄████▄  
-# ▒████▄    ▓██ ▒ ██▒▒██▀ ▀█  ▓██░ ██▒▓██▒▀█▀ ██▒▒████▄   ▓  ██▒ ▓▒▓██▒▒██▀ ▀█  
-# ▒██  ▀█▄  ▓██ ░▄█ ▒▒▓█    ▄ ▒██▀▀██░▓██    ▓██░▒██  ▀█▄ ▒ ▓██░ ▒░▒██▒▒▓█    ▄ 
-# ░██▄▄▄▄██ ▒██▀▀█▄  ▒▓▓▄ ▄██▒░▓█ ░██ ▒██    ▒██ ░██▄▄▄▄██░ ▓██▓ ░ ░██░▒▓▓▄ ▄██▒
-#  ▓█   ▓██▒░██▓ ▒██▒▒ ▓███▀ ░░▓█▒░██▓▒██▒   ░██▒ ▓█   ▓██▒ ▒██▒ ░ ░██░▒ ▓███▀ ░
-#  ▒▒   ▓▒█░░ ▒▓ ░▒▓░░ ░▒ ▒  ░ ▒ ░░▒░▒░ ▒░   ░  ░ ▒▒   ▓▒█░ ▒ ░░   ░▓  ░ ░▒ ▒  ░
-#   ▒   ▒▒ ░  ░▒ ░ ▒░  ░  ▒    ▒ ░▒░ ░░  ░      ░  ▒   ▒▒ ░   ░     ▒ ░  ░  ▒   
-#   ░   ▒     ░░   ░ ░         ░  ░░ ░░      ░     ░   ▒    ░       ▒ ░░        
-#       ░  ░   ░     ░ ░       ░  ░  ░       ░         ░  ░         ░  ░ ░      
-#                    ░                                                 ░
+#    █████╗ ██████╗  ██████╗██╗  ██╗ ██████╗ ████████╗
+#   ██╔══██╗██╔══██╗██╔════╝██║  ██║██╔═══██╗╚══██╔══╝
+#   ███████║██████╔╝██║     ███████║██║   ██║   ██║   
+#   ██╔══██║██╔══██╗██║     ██╔══██║██║▄▄ ██║   ██║   
+#   ██║  ██║██║  ██║╚██████╗██║  ██║╚██████╔╝   ██║   
+#   ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝ ╚══▀▀═╝    ╚═╝   
 #-------------------------------------------------------------------------
+
+# setting up variables from arguments
+iso=$1
+formatdisk=$2
+disk=$3
 
 echo "-------------------------------------------------"
 echo "Setting up mirrors for optimal download          "
 echo "-------------------------------------------------"
 
 # ask if it should use the most efficient mirror based on the current iso or set custom country
-read -p "Set custom country for mirrorlist? [Y/N] " custom_country
-case $formatdisk in
-  y|Y|yes|Yes|YES)
-    read -p "Set custom country: (i.e 'br'): " iso
-    ;;
-  *)
-    iso=$(curl -4 ifconfig.co/country-iso)
-    ;;
-esac
-
 timedatectl set-ntp true
 pacman -S --noconfirm pacman-contrib terminus-font
 setfont ter-v22b
 sed -i 's/^#Para/Para/' /etc/pacman.conf
 pacman -S --noconfirm reflector rsync
 mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
-echo -e "-------------------------------------------------------------------------"
-echo -e "   █████╗ ██████╗  ██████╗██╗  ██╗███╗   ███╗ █████╗ ████████╗██╗ ██████╗"
-echo -e "  ██╔══██╗██╔══██╗██╔════╝██║  ██║████╗ ████║██╔══██╗╚══██╔══╝██║██╔════╝"
-echo -e "  ███████║██████╔╝██║     ███████║██╔████╔██║███████║   ██║   ██║██║     "
-echo -e "  ██╔══██║██╔══██╗██║     ██╔══██║██║╚██╔╝██║██╔══██║   ██║   ██║██║     "
-echo -e "  ██║  ██║██║  ██║╚██████╗██║  ██║██║ ╚═╝ ██║██║  ██║   ██║   ██║╚██████╗"
-echo -e "  ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝ ╚═════╝"
-echo -e "-------------------------------------------------------------------------"
 reflector -a 48 -c $iso -f 5 -l 20 --sort rate --save /etc/pacman.d/mirrorlist
 mkdir /mnt
-
 
 echo -e "\nInstalling prereqs...\n$HR"
 pacman -S --noconfirm gptfdisk btrfs-progs
@@ -51,13 +33,8 @@ pacman -S --noconfirm gptfdisk btrfs-progs
 echo "-------------------------------------------------"
 echo "-------select your disk to format----------------"
 echo "-------------------------------------------------"
-lsblk
-echo "Please enter disk to work on: (example /dev/sda)"
-read DISK
-echo "THIS WILL FORMAT AND DELETE ALL DATA ON THE DISK"
-read -p "are you sure you want to continue (Y/N):" formatdisk
-case $formatdisk in
 
+case $formatdisk in
 y|Y|yes|Yes|YES)
 echo "--------------------------------------"
 echo -e "\nFormatting disk...\n$HR"
@@ -120,7 +97,7 @@ linux /vmlinuz-linux
 initrd  /initramfs-linux.img  
 options root=LABEL=ROOT rw rootflags=subvol=@
 EOF
-cp -R ~/Archmatic /mnt/root/
+cp -R ~/ArchQT /mnt/root/
 cp /etc/pacman.d/mirrorlist /mnt/etc/pacman.d/mirrorlist
 echo "--------------------------------------"
 echo "--   SYSTEM READY FOR 0-setup       --"

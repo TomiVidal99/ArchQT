@@ -1,12 +1,20 @@
 #!/usr/bin/env bash
 #-------------------------------------------------------------------------
-#    █████╗ ██████╗  ██████╗██╗  ██╗███╗   ███╗ █████╗ ████████╗██╗ ██████╗
-#   ██╔══██╗██╔══██╗██╔════╝██║  ██║████╗ ████║██╔══██╗╚══██╔══╝██║██╔════╝
-#   ███████║██████╔╝██║     ███████║██╔████╔██║███████║   ██║   ██║██║     
-#   ██╔══██║██╔══██╗██║     ██╔══██║██║╚██╔╝██║██╔══██║   ██║   ██║██║     
-#   ██║  ██║██║  ██║╚██████╗██║  ██║██║ ╚═╝ ██║██║  ██║   ██║   ██║╚██████╗
-#   ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝ ╚═════╝
+#    █████╗ ██████╗  ██████╗██╗  ██╗ ██████╗ ████████╗
+#   ██╔══██╗██╔══██╗██╔════╝██║  ██║██╔═══██╗╚══██╔══╝
+#   ███████║██████╔╝██║     ███████║██║   ██║   ██║   
+#   ██╔══██║██╔══██╗██║     ██╔══██║██║▄▄ ██║   ██║   
+#   ██║  ██║██║  ██║╚██████╗██║  ██║╚██████╔╝   ██║   
+#   ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝ ╚══▀▀═╝    ╚═╝   
 #-------------------------------------------------------------------------
+
+# setting up variables from arguments
+iso=$1
+timezone=$2
+locale=$3
+keymap=$4
+username=$5
+
 echo "--------------------------------------"
 echo "--          Network Setup           --"
 echo "--------------------------------------"
@@ -17,7 +25,6 @@ echo "Setting up mirrors for optimal download          "
 echo "-------------------------------------------------"
 pacman -S --noconfirm pacman-contrib curl
 pacman -S --noconfirm reflector rsync
-iso=$(curl -4 ifconfig.co/country-iso)
 cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
 
 nc=$(grep -c ^processor /proc/cpuinfo)
@@ -33,12 +40,21 @@ echo "       Setup Language to US and set locale       "
 echo "-------------------------------------------------"
 sed -i 's/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
 locale-gen
-timedatectl --no-ask-password set-timezone America/Chicago
+timedatectl --no-ask-password set-timezone $timezone 
 timedatectl --no-ask-password set-ntp 1
-localectl --no-ask-password set-locale LANG="en_US.UTF-8" LC_COLLATE="" LC_TIME="en_US.UTF-8"
+
+# this command wont work for some reason???
+#localectl --no-ask-password set-locale LANG="en_US.UTF-8" LC_COLLATE="" LC_TIME="en_US.UTF-8"
+# i replaced the command above with these lines
+echo "LANG=$locale.UTF-8" >> /etc/vconsole.conf
+echo "LANGUAGE=$locale:en_US:es" >> /etc/vconsole.conf
+echo "KEYMAP=$keymap" >> /etc/vconsole.conf
+echo "LC_TIME=$locale.UTF-8" >> /etc/vconsole.conf
+echo "LC_COLLATE=C" >> /etc/vconsole.conf
+
 
 # Set keymaps
-localectl --no-ask-password set-keymap us
+localectl --no-ask-password set-keymap $keymap
 
 # Add sudo no password rights
 sed -i 's/^# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
@@ -264,17 +280,14 @@ elif lspci | grep -E "Integrated Graphics Controller"; then
     pacman -S libva-intel-driver libvdpau-va-gl lib32-vulkan-intel vulkan-intel libva-intel-driver libva-utils --needed --noconfirm
 fi
 
-echo -e "\nDone!\n"
-if ! source install.conf; then
-	read -p "Please enter username:" username
-echo "username=$username" >> ${HOME}/ArchTitus/install.conf
-fi
+echo "username=$username" >> ${HOME}/ArchQT/install.conf
+
 if [ $(whoami) = "root"  ];
 then
     useradd -m -G wheel,libvirt -s /bin/bash $username 
 	passwd $username
-	cp -R /root/ArchTitus /home/$username/
-    chown -R $username: /home/$username/ArchTitus
+	cp -R /root/ArchQT /home/$username/
+    chown -R $username: /home/$username/ArchQT
 else
 	echo "You are already a user proceed with aur installs"
 fi

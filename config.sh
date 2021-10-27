@@ -1,15 +1,11 @@
 #!/bin/bash
 #-------------------------------------------------------------------------
-#  ▄▄▄       ██▀███   ▄████▄   ██░ ██  ███▄ ▄███▓ ▄▄▄     ▄▄▄█████▓ ██▓ ▄████▄  
-# ▒████▄    ▓██ ▒ ██▒▒██▀ ▀█  ▓██░ ██▒▓██▒▀█▀ ██▒▒████▄   ▓  ██▒ ▓▒▓██▒▒██▀ ▀█  
-# ▒██  ▀█▄  ▓██ ░▄█ ▒▒▓█    ▄ ▒██▀▀██░▓██    ▓██░▒██  ▀█▄ ▒ ▓██░ ▒░▒██▒▒▓█    ▄ 
-# ░██▄▄▄▄██ ▒██▀▀█▄  ▒▓▓▄ ▄██▒░▓█ ░██ ▒██    ▒██ ░██▄▄▄▄██░ ▓██▓ ░ ░██░▒▓▓▄ ▄██▒
-#  ▓█   ▓██▒░██▓ ▒██▒▒ ▓███▀ ░░▓█▒░██▓▒██▒   ░██▒ ▓█   ▓██▒ ▒██▒ ░ ░██░▒ ▓███▀ ░
-#  ▒▒   ▓▒█░░ ▒▓ ░▒▓░░ ░▒ ▒  ░ ▒ ░░▒░▒░ ▒░   ░  ░ ▒▒   ▓▒█░ ▒ ░░   ░▓  ░ ░▒ ▒  ░
-#   ▒   ▒▒ ░  ░▒ ░ ▒░  ░  ▒    ▒ ░▒░ ░░  ░      ░  ▒   ▒▒ ░   ░     ▒ ░  ░  ▒   
-#   ░   ▒     ░░   ░ ░         ░  ░░ ░░      ░     ░   ▒    ░       ▒ ░░        
-#       ░  ░   ░     ░ ░       ░  ░  ░       ░         ░  ░         ░  ░ ░      
-#                    ░                                                 ░
+#    █████╗ ██████╗  ██████╗██╗  ██╗ ██████╗ ████████╗
+#   ██╔══██╗██╔══██╗██╔════╝██║  ██║██╔═══██╗╚══██╔══╝
+#   ███████║██████╔╝██║     ███████║██║   ██║   ██║   
+#   ██╔══██║██╔══██╗██║     ██╔══██║██║▄▄ ██║   ██║   
+#   ██║  ██║██║  ██║╚██████╗██║  ██║╚██████╔╝   ██║   
+#   ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝ ╚══▀▀═╝    ╚═╝   
 #-------------------------------------------------------------------------
 
 # this file will set up all the parameters for the whole installation so theres no prompts in the middle of the istallation.
@@ -23,6 +19,9 @@
 # custom locale
 # custom keymap
 # custom region
+# timezone
+# nvim config?
+# format disk?
 # disk
 
 echo "Set up all the variables before installing so the installation won't stop until has finished..."
@@ -43,7 +42,7 @@ esac
 
 read -p "custom keymap? (default to en_US layout): [Y/N] " custom_keymap
 keymap=''
-case $custom_locale in
+case $custom_keymap in
   y|Y|yes|Yes|YES)
     read -p "Set custom keymap [i.e: 'la-latin1'] " keymap 
     ;;
@@ -51,7 +50,7 @@ esac
 
 read -p "custom region? (default from image source): [Y/N] " custom_region
 region=''
-case $custom_locale in
+case $custom_region in
   y|Y|yes|Yes|YES)
     read -p "Set custom region: (i.e 'br'): " region
     ;;
@@ -60,7 +59,14 @@ case $custom_locale in
     ;;
 esac
 
+read -p "timezone: [i.e: Ameria/Buenos_Aires] " timezone
+
+read -p "Install neovim config? [Y/N] " nvim_config
+
 lsblk # list the disks and partitions with the size
 read -p "Set a disk to install: [i.e: '/dev/sda', NOT the partition] " disk
 
+read -p "This will erase all data in your disk, are you sure you want to continue? [Y/N]" format_disk
+
 # should pass all the parameters to the installation files as arguments
+sh ./setup.sh $username $username_password $root_password $hostname $desktop_environment $custom_locale $locale $custom_keymap $keymap $custom_region $region $timezone $nvim_config $format_disk $disk
