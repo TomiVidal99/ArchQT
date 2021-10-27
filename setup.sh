@@ -59,7 +59,7 @@ case $custom_region in
     ;;
 esac
 
-read -p "timezone: [i.e: Ameria/Buenos_Aires] " timezone
+read -p "timezone: [i.e: America/Buenos_Aires] " timezone
 
 read -p "Install neovim config? [Y/N] " nvim_config
 
