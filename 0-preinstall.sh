@@ -13,9 +13,9 @@ iso=$1
 formatdisk=$2
 disk=$3
 
-echo "-------------------------------------------------"
-echo "Setting up mirrors for optimal download          "
-echo "-------------------------------------------------"
+echo "\n-------------------------------------------------\n"
+echo "\nSetting up mirrors for optimal download          \n"
+echo "\n-------------------------------------------------\n"
 
 timedatectl set-ntp true
 pacman -S --noconfirm pacman-contrib terminus-font
@@ -29,7 +29,7 @@ mkdir /mnt
 echo -e "\nInstalling prereqs...\n$HR"
 pacman -S --noconfirm gptfdisk btrfs-progs
 
-echo "the format disk its $(formatdisk)"
+echo "\n\nthe format disk its $(formatdisk)\n\n"
 case $formatdisk in
 y|Y|yes|Yes|YES)
 echo "--------------------------------------"
