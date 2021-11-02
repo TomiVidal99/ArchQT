@@ -26,7 +26,7 @@
     echo -t "\n   ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝ ╚══▀▀═╝    ╚═╝    \n" 
     echo -t "\n------------------------------------------------------------------------"
 
-    echo -t "format disk on the main its: $(format_disk)\n"
+    echo -t "format disk on the main its: $format_disk\n"
 
     echo $(bash 0-preinstall.sh $region $format_disk $disk)
     echo $(arch-chroot /mnt /root/ArchQT/1-setup.sh $region $timezone $locale $keymap $username)
