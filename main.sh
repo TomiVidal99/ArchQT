@@ -27,6 +27,6 @@
     echo -t "\n------------------------------------------------------------------------"
 
     echo -t $(bash 0-preinstall.sh $region $format_disk $disk)
-    #echo -t $(arch-chroot /mnt /root/ArchQT/1-setup.sh $region $timezone $locale $keymap $username)
-    #echo -t $(arch-chroot /mnt /usr/bin/runuser -u $username -- /home/$username/ArchQT/2-user.sh)
-    #echo -t $(arch-chroot /mnt /root/ArchQT/3-post-setup.sh)
+    echo -t $(arch-chroot /mnt /root/ArchQT/1-setup.sh $region $timezone $locale $keymap $username)
+    echo -t $(arch-chroot /mnt /usr/bin/runuser -u $username -- /home/$username/ArchQT/2-user.sh)
+    echo -t $(arch-chroot /mnt /root/ArchQT/3-post-setup.sh)
