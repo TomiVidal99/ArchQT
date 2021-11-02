@@ -126,14 +126,30 @@ echo "keyserver hkp://keyserver.ubuntu.com" >> /mnt/etc/pacman.d/gnupg/gpg.conf
 echo "--------------------------------------"
 echo "-- Bootloader Systemd Installation  --"
 echo "--------------------------------------"
-bootctl install --esp-path=/mnt/boot
-[ ! -d "/mnt/boot/loader/entries" ] && mkdir -p /mnt/boot/loader/entries
+
+
+# check if it should install bootloader for BIOS or UEFI
+if test -f "/sys/firmware/efi/efivars"; then
+
+  bootctl install --esp-path=/mnt/boot
+  [ ! -d "/mnt/boot/loader/entries" ] && mkdir -p /mnt/boot/loader/entries
 cat <<EOF > /mnt/boot/loader/entries/arch.conf
 title Arch Linux  
 linux /vmlinuz-linux  
 initrd  /initramfs-linux.img  
 options root=LABEL=ROOT rw rootflags=subvol=@
 EOF
+
+else
+
+  pacman -S --noconfirm grub
+  grub-install --target=i386-pc $disk # installs the grub
+  grub-mkconfig -o /boot/grub/grub.cfg # setups the grub config
+
+  # TODO: should pull the grub config from titus script to have dual boot if the user wants with the custom boot pictures
+
+fi
+
 cp -R ~/ArchQT /mnt/root/
 cp /etc/pacman.d/mirrorlist /mnt/etc/pacman.d/mirrorlist
 echo -e "\n--------------------------------------"
