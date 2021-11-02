@@ -30,10 +30,6 @@ mkdir /mnt
 echo -e "\nInstalling prereqs...\n$HR"
 pacman -S --noconfirm gptfdisk btrfs-progs
 
-echo "-------------------------------------------------"
-echo "-------select your disk to format----------------"
-echo "-------------------------------------------------"
-
 case $formatdisk in
 y|Y|yes|Yes|YES)
 echo "--------------------------------------"
@@ -47,32 +43,32 @@ echo "--------------------------------------"
     echo "The system has UEFI enabled, will install with GPT"
 
     # disk prep
-    sgdisk -Z ${DISK} # zap all on disk
-    #dd if=/dev/zero of=${DISK} bs=1M count=200 conv=fdatasync status=progress
-    sgdisk -a 2048 -o ${DISK} # new gpt disk 2048 alignment
+    sgdisk -Z ${disk} # zap all on disk
+    #dd if=/dev/zero of=${disk} bs=1M count=200 conv=fdatasync status=progress
+    sgdisk -a 2048 -o ${disk} # new gpt disk 2048 alignment
 
     # create partitions
-    sgdisk -n 1:0:+1000M ${DISK} # partition 1 (UEFI SYS), default start block, 512MB
-    sgdisk -n 2:0:0     ${DISK} # partition 2 (Root), default start, remaining
+    sgdisk -n 1:0:+1000M ${disk} # partition 1 (UEFI SYS), default start block, 512MB
+    sgdisk -n 2:0:0     ${disk} # partition 2 (Root), default start, remaining
 
     # set partition types
-    sgdisk -t 1:ef00 ${DISK}
-    sgdisk -t 2:8300 ${DISK}
+    sgdisk -t 1:ef00 ${disk}
+    sgdisk -t 2:8300 ${disk}
 
     # label partitions
-    sgdisk -c 1:"UEFISYS" ${DISK}
-    sgdisk -c 2:"ROOT" ${DISK}
+    sgdisk -c 1:"UEFISYS" ${disk}
+    sgdisk -c 2:"ROOT" ${disk}
 
     # make filesystems
     echo -e "\nCreating Filesystems...\n$HR"
-    if [[ ${DISK} =~ "nvme" ]]; then
-    mkfs.vfat -F32 -n "UEFISYS" "${DISK}p1"
-    mkfs.btrfs -L "ROOT" "${DISK}p2" -f
-    mount -t btrfs "${DISK}p2" /mnt
+    if [[ ${disk} =~ "nvme" ]]; then
+    mkfs.vfat -F32 -n "UEFISYS" "${disk}p1"
+    mkfs.btrfs -L "ROOT" "${disk}p2" -f
+    mount -t btrfs "${disk}p2" /mnt
     else
-    mkfs.vfat -F32 -n "UEFISYS" "${DISK}1"
-    mkfs.btrfs -L "ROOT" "${DISK}2" -f
-    mount -t btrfs "${DISK}2" /mnt
+    mkfs.vfat -F32 -n "UEFISYS" "${disk}1"
+    mkfs.btrfs -L "ROOT" "${disk}2" -f
+    mount -t btrfs "${disk}2" /mnt
     fi
     ls /mnt | xargs btrfs subvolume delete
     btrfs subvolume create /mnt/@
@@ -83,14 +79,14 @@ echo "--------------------------------------"
     echo "The system has UEFI disabled, will install with MBR"
 
     # disk prep
-    sfdisk --delete $DISK # delete all partitions
+    sfdisk --delete $disk # delete all partitions
 
 
     # make filesystems
     echo -e "\nCreating Filesystems...\n$HR"
 
     # only create a single partition with a MBR partition table
-    fdisk $DISK << EOF
+    fdisk $disk << EOF
 o
 n
 p
@@ -105,10 +101,10 @@ w
 EOF
 
     # just in case format the partition to linux
-    mkfs.ext4 "${DISK}1"
+    mkfs.ext4 "${disk}1"
 
     # mount the partition to /mnt
-    mount "${DISK}1" /mnt
+    mount "${disk}1" /mnt
 
   fi
 
