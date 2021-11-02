@@ -17,7 +17,6 @@ echo "-------------------------------------------------"
 echo "Setting up mirrors for optimal download          "
 echo "-------------------------------------------------"
 
-# ask if it should use the most efficient mirror based on the current iso or set custom country
 timedatectl set-ntp true
 pacman -S --noconfirm pacman-contrib terminus-font
 setfont ter-v22b
