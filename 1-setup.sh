@@ -284,9 +284,12 @@ echo "username=$username" >> ${HOME}/ArchQT/install.conf
 if [ $(whoami) = "root"  ];
 then
     useradd -m -G wheel,libvirt -s /bin/bash $username 
-	passwd $username
-	cp -R /root/ArchQT /home/$username/
+
+    # TODO: should remove this maybe??? see how to set this at init.
+	  passwd $username
+	  cp -R /root/ArchQT /home/$username/
     chown -R $username: /home/$username/ArchQT
+
 else
 	echo "You are already a user proceed with aur installs"
 fi
