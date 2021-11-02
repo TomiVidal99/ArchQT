@@ -25,8 +25,8 @@
     echo -t "   ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝ ╚══▀▀═╝    ╚═╝    " 
     echo -t "------------------------------------------------------------------------"
 
-    bash 0-preinstall.sh $region $format_disk $disk
-    arch-chroot /mnt /root/ArchQT/1-setup.sh $region $timezone $locale $keymap $username
+    echo $(bash 0-preinstall.sh $region $format_disk $disk)
+    echo $(arch-chroot /mnt /root/ArchQT/1-setup.sh $region $timezone $locale $keymap $username)
     #source /mnt/root/ArchQT/install.conf
-    arch-chroot /mnt /usr/bin/runuser -u $username -- /home/$username/ArchQT/2-user.sh
-    arch-chroot /mnt /root/ArchQT/3-post-setup.sh
+    echo $(arch-chroot /mnt /usr/bin/runuser -u $username -- /home/$username/ArchQT/2-user.sh)
+    echo $(arch-chroot /mnt /root/ArchQT/3-post-setup.sh)
