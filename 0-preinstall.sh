@@ -29,6 +29,7 @@ mkdir /mnt
 echo -e "\nInstalling prereqs...\n$HR"
 pacman -S --noconfirm gptfdisk btrfs-progs
 
+echo "the format disk its $(formatdisk)"
 case $formatdisk in
 y|Y|yes|Yes|YES)
 echo "--------------------------------------"

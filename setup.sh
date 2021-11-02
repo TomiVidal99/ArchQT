@@ -71,4 +71,4 @@
 # should pass all the parameters to the installation files as arguments
 #sh ./main.sh $username $username_password $root_password $hostname $desktop_environment $custom_locale $locale $custom_keymap $keymap $custom_region $region $timezone $nvim_config $format_disk $disk
 
-echo $(sh ./main.sh tomii 1234 1234 tomii-arch KDE br y la-latin1 y br y Argentina/Buenos_Aires n y /dev/sda)
+echo $(sh ./main.sh tomii 1234 1234 tomii-arch KDE br y la-latin1 y br y Argentina/Buenos_Aires n y /dev/sda) > log.txt
