@@ -74,4 +74,4 @@
 # unmount disk if the user already has it mounted
 umount -r /mnt
 
-echo $(sh ./main.sh tomii 1234 1234 tomii-arch KDE y br la-latin1 y br y Argentina/Buenos_Aires n y /dev/sda) > log.txt
+echo $(sh ./main.sh tomii 1234 1234 tomii-arch KDE y es_AR y la-latin1 y br Argentina/Buenos_Aires n y /dev/sda) > log.txt
