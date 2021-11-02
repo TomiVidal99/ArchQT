@@ -52,7 +52,6 @@ echo "KEYMAP=$keymap" >> /etc/vconsole.conf
 echo "LC_TIME=$locale.UTF-8" >> /etc/vconsole.conf
 echo "LC_COLLATE=C" >> /etc/vconsole.conf
 
-
 # Set keymaps
 localectl --no-ask-password set-keymap $keymap
 
