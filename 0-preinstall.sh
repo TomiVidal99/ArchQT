@@ -13,9 +13,9 @@ iso=$1
 formatdisk=$2
 disk=$3
 
-echo "\n-------------------------------------------------\n"
-echo "\nSetting up mirrors for optimal download          \n"
-echo "\n-------------------------------------------------\n"
+echo -e "\n-------------------------------------------------\n"
+echo -e "\nSetting up mirrors for optimal download          \n"
+echo -e "\n-------------------------------------------------\n"
 
 timedatectl set-ntp true
 pacman -S --noconfirm pacman-contrib terminus-font
@@ -29,18 +29,18 @@ mkdir /mnt
 echo -e "\nInstalling prereqs...\n$HR"
 pacman -S --noconfirm gptfdisk btrfs-progs
 
-echo "\n\nthe format disk its $(formatdisk)\n\n"
+echo -e "\n\nthe format disk its $(formatdisk)\n\n"
 case $formatdisk in
 y|Y|yes|Yes|YES)
-echo "--------------------------------------"
+echo -e "\n--------------------------------------"
 echo -e "\nFormatting disk...\n$HR"
-echo "--------------------------------------"
+echo -e "\n--------------------------------------"
 
   # i need to check if the system has UEFI enabled, if it does install with GPT partition table type, else just use MBR
   if test -f "/sys/firmware/efi/efivars"; then
 
     # INSTALL WITH GPT
-    echo "The system has UEFI enabled, will install with GPT"
+    echo -e "\nThe system has UEFI enabled, will install with GPT"
 
     # disk prep
     sgdisk -Z ${disk} # zap all on disk
@@ -76,7 +76,7 @@ echo "--------------------------------------"
 
   else 
     # INSTALL WITH MBR
-    echo "The system has UEFI disabled, will install with MBR"
+    echo -e "\nThe system has UEFI disabled, will install with MBR"
 
     # disk prep
     sfdisk --delete $disk # delete all partitions
@@ -117,9 +117,9 @@ mkdir /mnt/boot
 mkdir /mnt/boot/efi
 mount -t vfat -L UEFISYS /mnt/boot/
 
-echo "--------------------------------------"
-echo "-- Arch Install on Main Drive       --"
-echo "--------------------------------------"
+echo -e "\n--------------------------------------"
+echo -e "\n-- Arch Install on Main Drive       --"
+echo -e "\n--------------------------------------"
 pacstrap /mnt base base-devel linux linux-firmware vim nano sudo archlinux-keyring wget libnewt --noconfirm --needed
 genfstab -U /mnt >> /mnt/etc/fstab
 echo "keyserver hkp://keyserver.ubuntu.com" >> /mnt/etc/pacman.d/gnupg/gpg.conf
@@ -136,6 +136,6 @@ options root=LABEL=ROOT rw rootflags=subvol=@
 EOF
 cp -R ~/ArchQT /mnt/root/
 cp /etc/pacman.d/mirrorlist /mnt/etc/pacman.d/mirrorlist
-echo "--------------------------------------"
-echo "--   SYSTEM READY FOR 0-setup       --"
-echo "--------------------------------------"
+echo -e "\n--------------------------------------"
+echo -e "\n--   SYSTEM READY FOR 0-setup       --"
+echo -e "\n--------------------------------------"
