@@ -23,6 +23,9 @@ setfont ter-v22b
 sed -i 's/^#Para/Para/' /etc/pacman.conf
 pacman -S --noconfirm reflector rsync
 mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
+
+echo -e "\n\nISO: $iso"
+
 reflector -c $iso -f 5 -l 10 --sort rate --save /etc/pacman.d/mirrorlist
 mkdir /mnt
 
