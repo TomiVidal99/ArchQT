@@ -18,6 +18,7 @@ echo -e "\nSetting up mirrors for optimal download          \n"
 echo -e "\n-------------------------------------------------\n"
 
 timedatectl set-ntp true
+# TODO: change to noto fonts
 pacman -S --noconfirm pacman-contrib terminus-font
 setfont ter-v22b
 sed -i 's/^#Para/Para/' /etc/pacman.conf
@@ -38,7 +39,7 @@ echo -e "\n--------------------------------------"
 echo -e "\nFormatting disk...\n$HR"
 echo -e "\n--------------------------------------"
 
-  # i need to check if the system has UEFI enabled, if it does install with GPT partition table type, else just use MBR
+  # i need to check if the system has UEFI enabled, if it does install with GPT partition table type, else just use MBR for BIOS
   if test -f "/sys/firmware/efi/efivars"; then
 
     # INSTALL WITH GPT
@@ -132,6 +133,7 @@ echo "--------------------------------------"
 
 # check if it should install bootloader for BIOS or UEFI
 if test -f "/sys/firmware/efi/efivars"; then
+  # UEFI
 
   bootctl install --esp-path=/mnt/boot
   [ ! -d "/mnt/boot/loader/entries" ] && mkdir -p /mnt/boot/loader/entries
@@ -143,10 +145,11 @@ options root=LABEL=ROOT rw rootflags=subvol=@
 EOF
 
 else
+  # BIOS
 
-  pacman -S --noconfirm grub
-  grub-install --target=i386-pc $disk # installs the grub
-  grub-mkconfig -o /boot/grub/grub.cfg # setups the grub config
+  arch-chroot /mnt pacman -S --noconfirm grub
+  arch-chroot /mnt grub-install --target=i386-pc --root-directory=/mnt $disk
+  arch-chroot /mnt grub-mkconfig -o /mnt/boot/grub/grub.cfg
 
   # TODO: should pull the grub config from titus script to have dual boot if the user wants with the custom boot pictures
 
