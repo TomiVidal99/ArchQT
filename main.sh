@@ -9,13 +9,12 @@
     locale=$7
     custom_keymap=$8
     keymap=$9
-    custom_region=$10
-    region=$11
-    timezone=$12
-    nvim_config=$13
-    format_disk=$14
-    disk=$15
-
+    custom_region=${10}
+    region=${11}
+    timezone=${12}
+    nvim_config=${13}
+    format_disk=${14}
+    disk=${15}
 
     echo -t "\n------------------------------------------------------------------------\n"
     echo -t "\n    █████╗ ██████╗  ██████╗██╗  ██╗ ██████╗ ████████╗ \n" 
