@@ -29,7 +29,6 @@ mkdir /mnt
 echo -e "\nInstalling prereqs...\n$HR"
 pacman -S --noconfirm gptfdisk btrfs-progs
 
-echo -e "\n\nthe format disk its $(formatdisk)\n\n"
 case $formatdisk in
 y|Y|yes|Yes|YES)
 echo -e "\n--------------------------------------"
@@ -150,8 +149,9 @@ else
 
 fi
 
-cp -R ~/ArchQT /mnt/root/
+cp -R ~/ArchQT /mnt/root
 cp /etc/pacman.d/mirrorlist /mnt/etc/pacman.d/mirrorlist
+
 echo -e "\n--------------------------------------"
 echo -e "\n--   SYSTEM READY FOR 0-setup       --"
 echo -e "\n--------------------------------------"
