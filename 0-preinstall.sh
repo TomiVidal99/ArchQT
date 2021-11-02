@@ -116,9 +116,6 @@ esac
 
 # mount target
 mount -t btrfs -o subvol=@ -L ROOT /mnt
-mkdir /mnt/boot
-mkdir /mnt/boot/efi
-mount -t vfat -L UEFISYS /mnt/boot/
 
 echo -e "\n--------------------------------------"
 echo -e "\n-- Arch Install on Main Drive       --"
@@ -134,6 +131,10 @@ echo "--------------------------------------"
 # check if it should install bootloader for BIOS or UEFI
 if test -f "/sys/firmware/efi/efivars"; then
   # UEFI
+
+  mkdir /mnt/boot
+  mkdir /mnt/boot/efi
+  mount -t vfat -L UEFISYS /mnt/boot/
 
   bootctl install --esp-path=/mnt/boot
   [ ! -d "/mnt/boot/loader/entries" ] && mkdir -p /mnt/boot/loader/entries
