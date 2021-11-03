@@ -32,6 +32,13 @@ This is completely automated arch install of the KDE desktop environment on arch
 
 **[Arch Linux Installation Guide](https://github.com/rickellis/Arch-Linux-Install-Guide)**
 
+## TODO
+
+- [ ] add nvim config.
+- [ ] add dual option.
+- [ ] add i3 as an option.
+- [ ] fix terminal issue (not copying .bashrc over the new system).
+
 ### No Wifi
 
 ```bash
