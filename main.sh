@@ -31,6 +31,9 @@
     echo -t $(arch-chroot /mnt /usr/bin/runuser -u $username -- /home/$username/ArchQT/2-user.sh)
     echo -t $(arch-chroot /mnt /root/ArchQT/3-post-setup.sh)
 
+    # copy over the .bashrc config
+    echo -t $(cp --force /root/ArchQT/.bashrc /home/$username)
+
     # install nvim config if the user wants
     case $nvim_config in
     y|Y|yes|Yes|YES)

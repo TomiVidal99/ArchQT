@@ -245,6 +245,9 @@ PKGS=(
 'zsh'
 'zsh-syntax-highlighting'
 'zsh-autosuggestions'
+'nodejs' # web dev and dependencies for neovim
+'npm'
+'yarn'
 )
 
 for PKG in "${PKGS[@]}"; do
