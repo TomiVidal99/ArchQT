@@ -2,6 +2,9 @@
 
 github_repository="https:///github.com/TomiVidal99/nvim_config.git"
 
+# change to the home directory por relative paths
+cd ~
+
 # create the paths
 mkdir -p ~/.config/nvim
 cd ~/.config/nvim
