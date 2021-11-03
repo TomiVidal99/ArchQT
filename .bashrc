@@ -413,6 +413,10 @@ PROMPT_COMMAND=bash_prompt_command
 bash_prompt
 unset bash_prompt
 
-
+# Custom alias for github
+alias add='git add .'
+alias com='git commit -m'
+alias push='git push'
+alias pull='git pull'
 
 ### EOF ###

@@ -40,3 +40,7 @@
       echo -t $(arch-chroot /mnt /usr/bin/runuser -u $username -- /home/$username/ArchQT/nvim-config.sh)
         ;;
     esac
+
+    # set up the passwords for the root and the user
+    passwd root
+    passwd $username

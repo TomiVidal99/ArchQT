@@ -36,17 +36,18 @@ PKGS=(
 'nordic-darker-theme'
 'nordic-kde-git'
 'nordic-theme'
-'noto-fonts-emoji'
 'papirus-icon-theme'
 'ocs-url' # install packages from websites
 'sddm-nordic-theme-git'
 'snapper-gui-git'
+'noto-fonts-emoji' # cool and commmon fonts
 'ttf-droid'
 'ttf-hack'
 'ttf-meslo' # Nerdfont package
 'ttf-roboto'
 'zoom' # video conferences
 'snap-pac'
+'spotify' # music player
 )
 
 for PKG in "${PKGS[@]}"; do

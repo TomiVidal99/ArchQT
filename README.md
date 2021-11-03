@@ -24,6 +24,8 @@ cd ArchQT
 ./setup.sh
 ```
 
+After installation run `zsh` in the terminal to setup it up properly, this will be removed eventually.
+
 ### System Description
 
 This is completely automated arch install of the KDE desktop environment on arch using all the packages I use on a daily basis.
@@ -34,10 +36,11 @@ This is completely automated arch install of the KDE desktop environment on arch
 
 ## TODO
 
-- [ ] add nvim config.
+- [ ] fix keymap config.
+- [ ] fix terminal issue (not copying .bashrc over the new system).
+- [x] add nvim config.
 - [ ] add dual option.
 - [ ] add i3 as an option.
-- [ ] fix terminal issue (not copying .bashrc over the new system).
 
 ### No Wifi
 
@@ -49,4 +52,3 @@ sudo wifi-menu
 
 - Based on the script from <https://github.com/ChrisTitusTech>
 - Original packages script was a post install cleanup script called ArchMatic located here: <https://github.com/rickellis/ArchMatic>
-- Thank you to all the folks that helped during the creation from YouTube Chat! Here are all those Livestreams showing the creation: <https://www.youtube.com/watch?v=IkMCtkDIhe8&list=PLc7fktTRMBowNaBTsDHlL6X3P3ViX3tYg>

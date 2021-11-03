@@ -248,6 +248,7 @@ PKGS=(
 'nodejs' # web dev and dependencies for neovim
 'npm'
 'yarn'
+'python'
 )
 
 for PKG in "${PKGS[@]}"; do
@@ -282,14 +283,14 @@ elif lspci | grep -E "Integrated Graphics Controller"; then
     pacman -S libva-intel-driver libvdpau-va-gl lib32-vulkan-intel vulkan-intel libva-intel-driver libva-utils --needed --noconfirm
 fi
 
-echo "username=$username" >> ${HOME}/ArchQT/install.conf
+#echo "username=$username" >> ${HOME}/ArchQT/install.conf
 
 if [ $(whoami) = "root"  ];
 then
     useradd -m -G wheel,libvirt -s /bin/bash $username 
 
     # TODO: should remove this maybe??? see how to set this at init.
-	  passwd $username
+	  #passwd $username
 	  cp -R /root/ArchQT /home/$username/
     chown -R $username: /home/$username/ArchQT
 
