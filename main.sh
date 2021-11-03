@@ -30,3 +30,10 @@
     echo -t $(arch-chroot /mnt /root/ArchQT/1-setup.sh $region $timezone $locale $keymap $username)
     echo -t $(arch-chroot /mnt /usr/bin/runuser -u $username -- /home/$username/ArchQT/2-user.sh)
     echo -t $(arch-chroot /mnt /root/ArchQT/3-post-setup.sh)
+
+    # install nvim config if the user wants
+    case $nvim_config in
+    y|Y|yes|Yes|YES)
+      echo -t $(arch-chroot /mnt /usr/bin/runuser -u $username -- /home/$username/ArchQT/nvim-config.sh)
+        ;;
+    esac

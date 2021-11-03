@@ -227,7 +227,7 @@ PKGS=(
 'unzip'
 'usbutils'
 'vde2'
-'vim'
+'neovim' # replaced neovim for vim
 'virt-manager'
 'virt-viewer'
 'wget'
