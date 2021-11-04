@@ -42,5 +42,5 @@
     esac
 
     # set up the passwords for the root and the user
-    passwd root
-    passwd $username
+    arch-chroot /mnt passwd root
+    arch-chroot /mnt passwd $username
