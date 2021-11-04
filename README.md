@@ -36,6 +36,7 @@ This is completely automated arch install of the KDE desktop environment on arch
 
 ## TODO
 
+- [ ] fix logging not being displayed while scripts running.
 - [ ] fix keymap config.
 - [ ] fix terminal issue (not copying .bashrc over the new system).
 - [x] add nvim config.

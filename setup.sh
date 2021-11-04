@@ -24,6 +24,11 @@
 # format disk?
 # disk
 
+# default values
+locale='es_US'
+keymap='en'
+region=''
+
 echo "Set up all the variables before installing so the installation won't stop until has finished..."
 
 read -p "username: " username
@@ -33,7 +38,6 @@ read -p "hostname: " hostname
 #read -p "desktop environment: ['KDE', 'KDE/i3', 'custom'] " desktop_environment
 
 read -p "custom locale? (default is en_US) [Y/N] " custom_locale
-locale='es_US'
 case $custom_locale in
   y|Y|yes|Yes|YES)
     read -p "Set custom locale: (i.e 'es_AR'): " locale
@@ -41,7 +45,6 @@ case $custom_locale in
 esac
 
 read -p "custom keymap? (default to en_US layout): [Y/N] " custom_keymap
-keymap=''
 case $custom_keymap in
   y|Y|yes|Yes|YES)
     read -p "Set custom keymap [i.e: 'la-latin1'] " keymap 
@@ -49,7 +52,6 @@ case $custom_keymap in
 esac
 
 read -p "custom region? (default from image source): [Y/N] " custom_region
-region=''
 case $custom_region in
   y|Y|yes|Yes|YES)
     read -p "Set custom region: (i.e 'br'): " region

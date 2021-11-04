@@ -42,5 +42,7 @@
     esac
 
     # set up the passwords for the root and the user
+    echo -e "\n\n Enter the root password: "
     arch-chroot /mnt passwd root
+    echo -e "\n\n Enter the user ($username) password: "
     arch-chroot /mnt passwd $username
