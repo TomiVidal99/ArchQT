@@ -14,6 +14,8 @@ timezone=$2
 locale=$3
 keymap=$4
 username=$5
+gaming_packages=$5
+desktop_environment=$6
 
 echo "--------------------------------------"
 echo "--          Network Setup           --"
@@ -88,7 +90,6 @@ PKGS=(
 'btrfs-progs'
 'celluloid' # video players
 'cmatrix'
-'code' # Visual Studio code
 'cronie'
 'cups'
 'dhcpcd'
@@ -107,7 +108,6 @@ PKGS=(
 'fuse2'
 'fuse3'
 'fuseiso'
-'gamemode'
 'gcc'
 'gimp' # Photo editing
 'git'
@@ -187,19 +187,6 @@ PKGS=(
 'patch'
 'picom'
 'pkgconf'
-'plasma-browser-integration'
-'plasma-desktop'
-'plasma-disks'
-'plasma-firewall'
-'plasma-integration'
-'plasma-nm'
-'plasma-pa'
-'plasma-sdk'
-'plasma-systemmonitor'
-'plasma-thunderbolt'
-'plasma-vault'
-'plasma-workspace'
-'plasma-workspace-wallpapers'
 'polkit-kde-agent'
 'powerdevil'
 'powerline-fonts'
@@ -214,7 +201,6 @@ PKGS=(
 'sddm-kcm'
 'snapper'
 'spectacle'
-'steam'
 'sudo'
 'swtpm'
 'synergy'
@@ -249,12 +235,67 @@ PKGS=(
 'npm'
 'yarn'
 'python'
+'thunderbird'
 )
 
+GAMING_PACKAGES=(
+'gamemode'
+'steam'
+)
+
+KDE=(
+'plasma-browser-integration'
+'plasma-desktop'
+'plasma-disks'
+'plasma-firewall'
+'plasma-integration'
+'plasma-nm'
+'plasma-pa'
+'plasma-sdk'
+'plasma-systemmonitor'
+'plasma-thunderbolt'
+'plasma-vault'
+'plasma-workspace'
+'plasma-workspace-wallpapers'
+)
+
+I3=(
+'gamemode'
+'steam'
+)
+
+# necessary packages
 for PKG in "${PKGS[@]}"; do
     echo -e "INSTALLING: ${PKG} \n\n"
     sudo pacman -S "$PKG" --noconfirm --needed
 done
+
+
+# gaming packages
+case $gaming_packages in
+y|Y|yes|Yes|YES)
+    for GAMING_PACKAGE in "${GAMING_PACKAGES[@]}"; do
+        echo -e "INSTALLING: ${GAMING_PACKAGE} \n\n"
+        sudo pacman -S "$GAMING_PACKAGE" --noconfirm --needed
+    done
+    ;;
+esac
+
+# desktop environment packages
+case $desktop_environment in
+kde|KDE)
+    for PACKAGE in "${KDE[@]}"; do
+        echo -e "INSTALLING: ${PACKAGE} \n\n"
+        sudo pacman -S "$PACKAGE" --noconfirm --needed
+    done
+    ;;
+i3|I3)
+    for PACKAGE in "${I3[@]}"; do
+        echo -e "INSTALLING: ${PACKAGE} \n\n"
+        sudo pacman -S "$PACKAGE" --noconfirm --needed
+    done
+    ;;
+esac
 
 #
 # determine processor type and install microcode

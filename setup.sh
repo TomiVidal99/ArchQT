@@ -35,7 +35,7 @@ read -p "username: " username
 #read -p "username password: " username_password
 #read -p "root password: " root_password 
 read -p "hostname: " hostname
-#read -p "desktop environment: ['KDE', 'KDE/i3', 'custom'] " desktop_environment
+#read -p "desktop environment: ['KDE', 'i3', 'custom'] " desktop_environment
 
 read -p "custom locale? (default is en_US) [Y/N] " custom_locale
 case $custom_locale in
@@ -65,13 +65,15 @@ read -p "timezone: [i.e: America/Buenos_Aires] " timezone
 
 read -p "Install neovim config? [Y/N] " nvim_config
 
+read -p "Install gaming packages? [Y/N] " gaming_packages
+
 lsblk # list the disks and partitions with the size
 read -p "Set a disk to install: [i.e: '/dev/sda', NOT the partition] " disk
 
 read -p "This will erase all data in your disk, are you sure you want to continue? [Y/N] " format_disk
 
  #should pass all the parameters to the installation files as arguments
- echo -e $(sh ./main.sh $username 1234 1234 $hostname KDE $custom_locale $locale $custom_keymap $keymap $custom_region $region $timezone $nvim_config $format_disk $disk)
+ echo -e $(sh ./main.sh $username 1234 1234 $hostname KDE $custom_locale $locale $custom_keymap $keymap $custom_region $region $timezone $nvim_config $gaming_packages $format_disk $disk)
 
 # unmount disk if the user already has it mounted
 umount -r /mnt

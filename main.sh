@@ -14,8 +14,9 @@
     region=${args[10]}
     timezone=${args[11]}
     nvim_config=${args[12]}
-    format_disk=${args[13]}
-    disk=${args[14]}
+    gaming_packages=${args[13]}
+    format_disk=${args[14]}
+    disk=${args[15]}
 
     echo -t "\n------------------------------------------------------------------------\n"
     echo -t "\n    █████╗ ██████╗  ██████╗██╗  ██╗ ██████╗ ████████╗ \n" 
@@ -27,7 +28,7 @@
     echo -t "\n------------------------------------------------------------------------"
 
     echo -t $(bash 0-preinstall.sh $region $format_disk $disk)
-    echo -t $(arch-chroot /mnt /root/ArchQT/1-setup.sh $region $timezone $locale $keymap $username)
+    echo -t $(arch-chroot /mnt /root/ArchQT/1-setup.sh $region $timezone $locale $keymap $username $gaming_packages $desktop_environment)
     echo -t $(arch-chroot /mnt /usr/bin/runuser -u $username -- /home/$username/ArchQT/2-user.sh)
     echo -t $(arch-chroot /mnt /root/ArchQT/3-post-setup.sh)
 
