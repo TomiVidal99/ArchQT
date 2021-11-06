@@ -36,7 +36,11 @@ This is completely automated arch install of the KDE desktop environment on arch
 
 ## TODO
 
-- [ ] fix add redshift package.
+- [ ] add latex support if the user wants.
+- [ ] fix locale.
+- [ ] add octave scripts if the user wants.
+- [ ] run 'yarn global add neovim', 'pip install neovim', and 'pip3 install neovim', 'gem install neovim', and 'export PATH=$PATH:$HOME/.local/share/gem/ruby/3.0.0/bin' install.
+- [ ] add redshift, ctags, python2, python3, ruby, octave packages.
 - [ ] fix enable bluetooth services.
 - [ ] fix zsh not working.
 - [ ] fix kitty not working.
