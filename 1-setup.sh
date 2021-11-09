@@ -49,10 +49,15 @@ timedatectl --no-ask-password set-ntp 1
 #localectl --no-ask-password set-locale LANG="en_US.UTF-8" LC_COLLATE="" LC_TIME="en_US.UTF-8"
 # i replaced the command above with these lines
 echo "LANG=$locale.UTF-8" >> /etc/vconsole.conf
-echo "LANGUAGE=$locale:en_US:es" >> /etc/vconsole.conf
-echo "KEYMAP=$keymap" >> /etc/vconsole.conf
-echo "LC_TIME=$locale.UTF-8" >> /etc/vconsole.conf
-echo "LC_COLLATE=C" >> /etc/vconsole.conf
+echo "FONT=$locale:en_US:es" >> /etc/vconsole.conf
+echo "FONT_MAP=$locale:en_US:es" >> /etc/vconsole.conf
+
+# TODO: check if all of this its actually necessary
+#echo "FONT_MAP=$locale:en_US:es" >> /etc/vconsole.conf
+#echo "LANGUAGE=$locale:en_US:es" >> /etc/vconsole.conf
+#echo "KEYMAP=$keymap" >> /etc/vconsole.conf
+#echo "LC_TIME=$locale.UTF-8" >> /etc/vconsole.conf
+#echo "LC_COLLATE=C" >> /etc/vconsole.conf
 
 # Set keymaps
 localectl --no-ask-password set-keymap $keymap
@@ -236,6 +241,9 @@ PKGS=(
 'yarn'
 'python'
 'thunderbird'
+'ruby'
+'redshift'
+'octave'
 )
 
 GAMING_PACKAGES=(
@@ -260,8 +268,12 @@ KDE=(
 )
 
 I3=(
-'gamemode'
-'steam'
+  'i3-gaps'
+  'feh'
+  'j4-dmenu-desktop' 
+  'morc_menu'
+  'i3status'
+  'wmctrl'
 )
 
 # necessary packages
@@ -290,10 +302,13 @@ kde|KDE)
     done
     ;;
 i3|I3)
+    # install dependencies
     for PACKAGE in "${I3[@]}"; do
         echo -e "INSTALLING: ${PACKAGE} \n\n"
         sudo pacman -S "$PACKAGE" --noconfirm --needed
     done
+    # set up configuration
+    arch-chroot /mnt cp /home/$username/plasma-i3.desktop /usr/share/xsessions
     ;;
 esac
 
@@ -331,7 +346,7 @@ then
     useradd -m -G wheel,libvirt -s /bin/bash $username 
 
     # TODO: should remove this maybe??? see how to set this at init.
-	  #passwd $username
+		#passwd $username
 	  cp -R /root/ArchQT /home/$username/
     chown -R $username: /home/$username/ArchQT
 
