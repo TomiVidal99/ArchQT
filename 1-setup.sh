@@ -244,6 +244,7 @@ PKGS=(
 'ruby'
 'redshift'
 'octave'
+'libreoffice'
 )
 
 GAMING_PACKAGES=(
