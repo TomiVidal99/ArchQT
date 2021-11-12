@@ -14,8 +14,8 @@ timezone=$2
 locale=$3
 keymap=$4
 username=$5
-gaming_packages=$5
 desktop_environment=$6
+gaming_packages=$5
 
 echo "--------------------------------------"
 echo "--          Network Setup           --"
