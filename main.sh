@@ -38,7 +38,7 @@
     # install nvim config if the user wants
     case $nvim_config in
     y|Y|yes|Yes|YES)
-      echo -t $(arch-chroot /mnt /usr/bin/runuser -u $username -- /home/$username/ArchQT/nvim-config.sh)
+      echo -t $(arch-chroot /mnt /home/$username/ArchQT/nvim-config.sh)
         ;;
     esac
 

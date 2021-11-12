@@ -23,9 +23,9 @@ gem install neovim
 export PATH=$PATH:$HOME/.local/share/gem/ruby/3.0.0/bin
 
 # fuzzy finder dependency for plugin
-sudo pacman -S the_silver_searcher
+pacman -S the_silver_searcher --noconfirm --needed
 
 # error debugger dependency
-sudo yay -S --noconfirm ctags
+yay -S ctags --noconfirm 
 
 nvim +PlugInstall
