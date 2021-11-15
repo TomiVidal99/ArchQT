@@ -37,6 +37,7 @@ This is completely automated arch install of the KDE desktop environment on arch
 ## TODO
 
 - [ ] fix packages not working when separating KDE and i3 dependencies.
+- [ ] Add ccls package for nvim (languaje server provider).
 - [ ] fix nvim not working, (sudo permissions?).
 - [ ] fix grub path, and disable bootup menu.
 - [ ] add latex support if the user wants.
