@@ -40,27 +40,21 @@ sudo sed -i 's/COMPRESSXZ=(xz -c -z -)/COMPRESSXZ=(xz -c -T $nc -z -)/g' /etc/ma
 echo "-------------------------------------------------"
 echo "       Setup Language to US and set locale       "
 echo "-------------------------------------------------"
-sed -i 's/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
+ln -sf /usr/share/zoneinfo/$timezone /etc/localtime
+hwclock --systohc
+#sed -i 's/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
+cp /home/$username/ArchQT/locale.gen /etc/locale.gen
 locale-gen
-timedatectl --no-ask-password set-timezone $timezone 
-timedatectl --no-ask-password set-ntp 1
+
+#timedatectl --no-ask-password set-timezone $timezone 
+#timedatectl --no-ask-password set-ntp 1
+
+echo "LANG=en_US.UTF-8" >> /etc/locale.conf
 
 # this command wont work for some reason???
 #localectl --no-ask-password set-locale LANG="en_US.UTF-8" LC_COLLATE="" LC_TIME="en_US.UTF-8"
 # i replaced the command above with these lines
-echo "LANG=$locale.UTF-8" >> /etc/vconsole.conf
-echo "FONT=$locale:en_US:es" >> /etc/vconsole.conf
-echo "FONT_MAP=$locale:en_US:es" >> /etc/vconsole.conf
-
-# TODO: check if all of this its actually necessary
-#echo "FONT_MAP=$locale:en_US:es" >> /etc/vconsole.conf
-#echo "LANGUAGE=$locale:en_US:es" >> /etc/vconsole.conf
-#echo "KEYMAP=$keymap" >> /etc/vconsole.conf
-#echo "LC_TIME=$locale.UTF-8" >> /etc/vconsole.conf
-#echo "LC_COLLATE=C" >> /etc/vconsole.conf
-
-# Set keymaps
-localectl --no-ask-password set-keymap $keymap
+echo "KEYMAP=$keymap" >> /etc/vconsole.conf
 
 # Add sudo no password rights
 sed -i 's/^# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
