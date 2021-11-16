@@ -29,7 +29,7 @@
 
     echo -t $(bash 0-preinstall.sh $region $format_disk $disk)
     echo -t $(arch-chroot /mnt /root/ArchQT/1-setup.sh $region $timezone $locale $keymap $username $gaming_packages $desktop_environment)
-    echo -t $(arch-chroot /mnt /usr/bin/runuser -u $username -- /home/$username/ArchQT/2-user.sh)
+    echo -t $(arch-chroot /mnt /home/$username/ArchQT/2-user.sh)
     echo -t $(arch-chroot /mnt /root/ArchQT/3-post-setup.sh)
 
     # copy over the .bashrc config
