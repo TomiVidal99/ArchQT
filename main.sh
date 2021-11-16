@@ -34,6 +34,8 @@
 
     # copy over the .bashrc config
     echo -t $(cp --force /root/ArchQT/.bashrc /home/$username)
+    # copy over the .zsh config
+    echo -t $(cp --force /root/ArchQT/.zshrc /home/$username)
 
     # install nvim config if the user wants
     case $nvim_config in
@@ -41,6 +43,7 @@
       echo -t $(arch-chroot /mnt /home/$username/ArchQT/nvim-config.sh)
         ;;
     esac
+
 
     # set up the passwords for the root and the user
     echo -e "\n\n Enter the root password: "
