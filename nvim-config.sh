@@ -20,7 +20,7 @@ sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.
 yarn global add neovim
 pip3 install neovim 
 gem install neovim
-export PATH=$PATH:$HOME/.local/share/gem/ruby/3.0.0/bin
+gem install
 
 # fuzzy finder dependency for plugin
 pacman -S the_silver_searcher --noconfirm --needed
@@ -28,4 +28,4 @@ pacman -S the_silver_searcher --noconfirm --needed
 # error debugger dependency
 yay -S ctags --noconfirm 
 
-nvim +PlugInstall
+nvim +PlugInstall +CocInstall coc-eslint

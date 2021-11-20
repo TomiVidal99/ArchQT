@@ -36,20 +36,20 @@ This is completely automated arch install of the KDE desktop environment on arch
 
 ## TODO
 
-- [ ] fix packages not working when separating KDE and i3 dependencies.
-- [ ] Add ccls package for nvim (languaje server provider).
+- [ ] fix language.
+- [x] fix packages not working when separating KDE and i3 dependencies.
 - [ ] fix nvim not working, (sudo permissions?).
 - [ ] fix grub path, and disable bootup menu.
 - [ ] add latex support if the user wants.
-- [ ] fix locale.
+- [x] fix keymap.
 - [ ] add octave scripts if the user wants.
 - [x] run 'yarn global add neovim', 'pip install neovim', and 'pip3 install neovim', 'gem install neovim', and 'export PATH=$PATH:$HOME/.local/share/gem/ruby/3.0.0/bin' install.
 - [x] add redshift, ctags, python3, ruby, octave packages.
 - [x] fix enable bluetooth services.
-- [x] fix zsh not working.
+- [ ] fix zsh not working.
 - [ ] add ask for kitty install.
 - [ ] fix logging not being displayed while scripts running.
-- [ ] fix keymap config.
+- [x] fix keymap config.
 - [ ] fix terminal issue (not copying .bashrc over the new system).
 - [x] add nvim config.
 - [ ] add dual option.

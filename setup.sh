@@ -72,10 +72,10 @@ region=''
 #
 #read -p "This will erase all data in your disk, are you sure you want to continue? [Y/N] " format_disk
 
- #should pass all the parameters to the installation files as arguments
-#echo -e $(sh ./main.sh $username 1234 1234 $hostname KDE $custom_locale $locale $custom_keymap $keymap $custom_region $region $timezone $nvim_config $gaming_packages $format_disk $disk)
-
 # unmount disk if the user already has it mounted
 umount -r /mnt
 
-echo -e $(sh ./main.sh tomii 1234 1234 tomii-arch KDE es_AR y la-latin1 y br y America/Buenos_Aires n n y /dev/sda)
+ #should pass all the parameters to the installation files as arguments
+echo -e $(sh ./main.sh $username 1234 1234 $hostname KDE $custom_locale $locale $custom_keymap $keymap $custom_region $region $timezone $nvim_config $gaming_packages $format_disk $disk)
+
+#echo -e $(sh ./main.sh tomii 1234 1234 tomii-arch KDE es_AR y la-latin1 y br y America/Buenos_Aires n n y /dev/sda)

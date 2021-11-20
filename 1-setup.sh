@@ -54,7 +54,7 @@ echo "LANG=en_US.UTF-8" >> /etc/locale.conf
 # this command wont work for some reason???
 #localectl --no-ask-password set-locale LANG="en_US.UTF-8" LC_COLLATE="" LC_TIME="en_US.UTF-8"
 # i replaced the command above with these lines
-echo "KEYMAP=$keymap" >> /etc/vconsole.conf
+localectl set-keymap $keymap
 
 # Add sudo no password rights
 sed -i 's/^# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
@@ -306,6 +306,13 @@ i3|I3)
     arch-chroot /mnt cp /home/$username/plasma-i3.desktop /usr/share/xsessions
     ;;
 esac
+
+# install better colors for the terminal
+sudo gem install colorls
+
+# add gem to the PATH
+echo "export PATH=\$PATH:$HOME/.local/share/gem/ruby/3.0.0/bin" >> /home/$username/.bashrc
+echo "export PATH=\$PATH:$HOME/.local/share/gem/ruby/3.0.0/bin" >> /home/$username/.zshrc
 
 #
 # determine processor type and install microcode
