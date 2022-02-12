@@ -1,4 +1,4 @@
-# ArchTitus Installer Script
+# ArchQT Installer Script
 
 <!--TODO: add custom pic-->
 <!--<img src="https://i.imgur.com/YiNMnan.png" />-->
@@ -36,6 +36,10 @@ This is completely automated arch install of the KDE desktop environment on arch
 
 ## TODO
 
+- [ ] fix add redshift package.
+- [ ] fix enable bluetooth services.
+- [ ] fix zsh not working.
+- [ ] fix kitty not working.
 - [ ] fix logging not being displayed while scripts running.
 - [ ] fix keymap config.
 - [ ] fix terminal issue (not copying .bashrc over the new system).
