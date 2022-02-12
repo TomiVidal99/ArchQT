@@ -6,12 +6,12 @@
     root_password=${args[2]}
     hostname=${args[3]}
     desktop_environment=${args[4]}
-    custom_locale=${args[5]}
-    locale=${args[6]}
-    custom_keymap=${args[7]}
-    keymap=${args[8]}
-    custom_region=${args[9]}
-    region=${args[10]}
+    locale=${args[5]}
+    custom_locale=${args[6]}
+    keymap=${args[7]}
+    custom_keymap=${args[8]}
+    region=${args[9]}
+    custom_region=${args[10]}
     timezone=${args[11]}
     nvim_config=${args[12]}
     gaming_packages=${args[13]}
@@ -34,13 +34,16 @@
 
     # copy over the .bashrc config
     echo -t $(cp --force /root/ArchQT/.bashrc /home/$username)
+    # copy over the .zsh config
+    echo -t $(cp --force /root/ArchQT/.zshrc /home/$username)
 
     # install nvim config if the user wants
     case $nvim_config in
     y|Y|yes|Yes|YES)
-      echo -t $(arch-chroot /mnt /usr/bin/runuser -u $username -- /home/$username/ArchQT/nvim-config.sh)
+      echo -t $(arch-chroot /mnt /home/$username/ArchQT/nvim-config.sh)
         ;;
     esac
+
 
     # set up the passwords for the root and the user
     echo -e "\n\n Enter the root password: "

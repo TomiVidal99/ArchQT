@@ -14,8 +14,8 @@ timezone=$2
 locale=$3
 keymap=$4
 username=$5
-gaming_packages=$5
-desktop_environment=$6
+gaming_packages=$6
+desktop_environment=$7
 
 echo "--------------------------------------"
 echo "--          Network Setup           --"
@@ -40,22 +40,21 @@ sudo sed -i 's/COMPRESSXZ=(xz -c -z -)/COMPRESSXZ=(xz -c -T $nc -z -)/g' /etc/ma
 echo "-------------------------------------------------"
 echo "       Setup Language to US and set locale       "
 echo "-------------------------------------------------"
-sed -i 's/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
+ln -sf /usr/share/zoneinfo/$timezone /etc/localtime
+hwclock --systohc
+#sed -i 's/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
+cp /home/$username/ArchQT/locale.gen /etc/locale.gen
 locale-gen
-timedatectl --no-ask-password set-timezone $timezone 
-timedatectl --no-ask-password set-ntp 1
+
+#timedatectl --no-ask-password set-timezone $timezone 
+#timedatectl --no-ask-password set-ntp 1
+
+echo "LANG=en_US.UTF-8" >> /etc/locale.conf
 
 # this command wont work for some reason???
 #localectl --no-ask-password set-locale LANG="en_US.UTF-8" LC_COLLATE="" LC_TIME="en_US.UTF-8"
 # i replaced the command above with these lines
-echo "LANG=$locale.UTF-8" >> /etc/vconsole.conf
-echo "LANGUAGE=$locale:en_US:es" >> /etc/vconsole.conf
-echo "KEYMAP=$keymap" >> /etc/vconsole.conf
-echo "LC_TIME=$locale.UTF-8" >> /etc/vconsole.conf
-echo "LC_COLLATE=C" >> /etc/vconsole.conf
-
-# Set keymaps
-localectl --no-ask-password set-keymap $keymap
+localectl set-keymap $keymap
 
 # Add sudo no password rights
 sed -i 's/^# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
@@ -236,6 +235,10 @@ PKGS=(
 'yarn'
 'python'
 'thunderbird'
+'ruby'
+'redshift'
+'octave'
+'libreoffice'
 )
 
 GAMING_PACKAGES=(
@@ -260,8 +263,12 @@ KDE=(
 )
 
 I3=(
-'gamemode'
-'steam'
+  'i3-gaps'
+  'feh'
+  'j4-dmenu-desktop' 
+  'morc_menu'
+  'i3status'
+  'wmctrl'
 )
 
 # necessary packages
@@ -290,12 +297,22 @@ kde|KDE)
     done
     ;;
 i3|I3)
+    # install dependencies
     for PACKAGE in "${I3[@]}"; do
         echo -e "INSTALLING: ${PACKAGE} \n\n"
         sudo pacman -S "$PACKAGE" --noconfirm --needed
     done
+    # set up configuration
+    arch-chroot /mnt cp /home/$username/plasma-i3.desktop /usr/share/xsessions
     ;;
 esac
+
+# install better colors for the terminal
+sudo gem install colorls
+
+# add gem to the PATH
+echo "export PATH=\$PATH:$HOME/.local/share/gem/ruby/3.0.0/bin" >> /home/$username/.bashrc
+echo "export PATH=\$PATH:$HOME/.local/share/gem/ruby/3.0.0/bin" >> /home/$username/.zshrc
 
 #
 # determine processor type and install microcode
@@ -331,7 +348,7 @@ then
     useradd -m -G wheel,libvirt -s /bin/bash $username 
 
     # TODO: should remove this maybe??? see how to set this at init.
-	  #passwd $username
+		#passwd $username
 	  cp -R /root/ArchQT /home/$username/
     chown -R $username: /home/$username/ArchQT
 
