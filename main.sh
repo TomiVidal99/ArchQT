@@ -17,6 +17,7 @@
     gaming_packages=${args[13]}
     format_disk=${args[14]}
     disk=${args[15]}
+    install_extra_packages=${args[16]}
 
     echo -t "\n------------------------------------------------------------------------\n"
     echo -t "\n    █████╗ ██████╗  ██████╗██╗  ██╗ ██████╗ ████████╗ \n" 
@@ -29,8 +30,10 @@
 
     echo -t $(bash 0-preinstall.sh $region $format_disk $disk)
     echo -t $(arch-chroot /mnt /root/ArchQT/1-setup.sh $region $timezone $locale $keymap $username $gaming_packages $desktop_environment)
-    echo -t $(arch-chroot /mnt /usr/bin/runuser -u $username -- /home/$username/ArchQT/2-user.sh)
-    echo -t $(arch-chroot /mnt /root/ArchQT/3-post-setup.sh)
+    if install_extra_packages; then
+      echo -t $(arch-chroot /mnt /usr/bin/runuser -u $username -- /home/$username/ArchQT/2-user.sh)
+      echo -t $(arch-chroot /mnt /root/ArchQT/3-post-setup.sh)
+    fi
 
     # copy over the .bashrc config
     echo -t $(cp --force /root/ArchQT/.bashrc /home/$username)

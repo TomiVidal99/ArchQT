@@ -16,6 +16,7 @@ keymap=$4
 username=$5
 gaming_packages=$6
 desktop_environment=$7
+install_extra_packages=$8
 
 echo "--------------------------------------"
 echo "--          Network Setup           --"
@@ -44,12 +45,12 @@ ln -sf /usr/share/zoneinfo/$timezone /etc/localtime
 hwclock --systohc
 #sed -i 's/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
 cp /home/$username/ArchQT/locale.gen /etc/locale.gen
-locale-gen
 
 #timedatectl --no-ask-password set-timezone $timezone 
 #timedatectl --no-ask-password set-ntp 1
 
 echo "LANG=en_US.UTF-8" >> /etc/locale.conf
+locale-gen
 
 # this command wont work for some reason???
 #localectl --no-ask-password set-locale LANG="en_US.UTF-8" LC_COLLATE="" LC_TIME="en_US.UTF-8"
@@ -71,7 +72,6 @@ echo -e "\nInstalling Base System\n"
 PKGS=(
 'alsa-plugins' # audio plugins
 'alsa-utils' # audio utils
-'ark' # compression
 'audiocd-kio' 
 'autoconf' # build
 'automake' # build
@@ -83,12 +83,10 @@ PKGS=(
 'bluedevil'
 'bluez'
 'bluez-libs'
-'breeze'
 'breeze-gtk'
 'bridge-utils'
 'btrfs-progs'
 'celluloid' # video players
-'cmatrix'
 'cronie'
 'cups'
 'dhcpcd'
@@ -100,7 +98,6 @@ PKGS=(
 'dosfstools'
 'drkonqi'
 'edk2-ovmf'
-'efibootmgr' # EFI boot
 'egl-wayland'
 'exfat-utils'
 'flex'
@@ -123,40 +120,7 @@ PKGS=(
 'iptables-nft'
 'jdk-openjdk' # Java 17
 'kactivitymanagerd'
-'kate'
-'kvantum-qt5'
-'kcalc'
-'kcharselect'
-'kcron'
-'kde-cli-tools'
-'kde-gtk-config'
-'kdecoration'
-'kdenetwork-filesharing'
-'kdeplasma-addons'
-'kdesdk-thumbnailers'
-'kdialog'
-'keychain'
-'kfind'
-'kgamma5'
-'kgpg'
-'khotkeys'
-'kinfocenter'
-'kitty'
-'kmenuedit'
-'kmix'
-'konsole'
-'kscreen'
-'kscreenlocker'
-'ksshaskpass'
-'ksystemlog'
-'ksystemstats'
-'kwallet-pam'
-'kwalletmanager'
-'kwayland-integration'
-'kwayland-server'
-'kwin'
-'kwrite'
-'kwrited'
+'gnome-terminal'
 'layer-shell-qt'
 'libguestfs'
 'libkscreen'
@@ -172,7 +136,6 @@ PKGS=(
 'm4'
 'make'
 'milou'
-'nano'
 'neofetch'
 'networkmanager'
 'ntfs-3g'
@@ -230,6 +193,9 @@ PKGS=(
 'zsh'
 'zsh-syntax-highlighting'
 'zsh-autosuggestions'
+)
+
+EXTRA_PKGS=(
 'nodejs' # web dev and dependencies for neovim
 'npm'
 'yarn'
@@ -247,6 +213,41 @@ GAMING_PACKAGES=(
 )
 
 KDE=(
+'kactivitymanagerd'
+'kate'
+'kvantum-qt5'
+'kcalc'
+'kcharselect'
+'kcron'
+'kde-cli-tools'
+'kde-gtk-config'
+'kdecoration'
+'kdenetwork-filesharing'
+'kdeplasma-addons'
+'kdesdk-thumbnailers'
+'kdialog'
+'keychain'
+'kfind'
+'kgamma5'
+'kgpg'
+'khotkeys'
+'kinfocenter'
+'kitty'
+'kmenuedit'
+'kmix'
+'konsole'
+'kscreen'
+'kscreenlocker'
+'ksshaskpass'
+'ksystemlog'
+'ksystemstats'
+'kwallet-pam'
+'kwalletmanager'
+'kwayland-integration'
+'kwayland-server'
+'kwin'
+'kwrite'
+'kwrited'
 'plasma-browser-integration'
 'plasma-desktop'
 'plasma-disks'
@@ -271,11 +272,21 @@ I3=(
   'wmctrl'
 )
 
+
+
 # necessary packages
 for PKG in "${PKGS[@]}"; do
     echo -e "INSTALLING: ${PKG} \n\n"
     sudo pacman -S "$PKG" --noconfirm --needed
 done
+
+# extra packages
+if install_extra_packages; then
+for PKG in "${EXTRA_PKGS[@]}"; do
+    echo -e "INSTALLING: ${PKG} \n\n"
+    sudo pacman -S "$PKG" --noconfirm --needed
+done
+fi
 
 
 # gaming packages
@@ -289,6 +300,7 @@ y|Y|yes|Yes|YES)
 esac
 
 # desktop environment packages
+if install_extra_packages; then
 case $desktop_environment in
 kde|KDE)
     for PACKAGE in "${KDE[@]}"; do
@@ -306,6 +318,7 @@ i3|I3)
     arch-chroot /mnt cp /home/$username/plasma-i3.desktop /usr/share/xsessions
     ;;
 esac
+fi
 
 # install better colors for the terminal
 sudo gem install colorls
